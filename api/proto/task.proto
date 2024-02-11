@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option go_package = "github.com/jittakal/todo-api-hexagonal/api/proto";
+
+package proto;
+
+
+service TaskService {
+    rpc GetTask(GetTaskRequest) returns (Task);
+}
+
+message GetTaskRequest {
+    string id = 1;
+}
+
+message Task {
+    string id = 1;
+    string title = 2;
+    bool done =3;
+}

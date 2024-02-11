@@ -1,0 +1,128 @@
+definitions:
+  domain.Task:
+    properties:
+      done:
+        type: boolean
+      id:
+        type: string
+      title:
+        type: string
+    type: object
+  rest.TaskCreateRequest:
+    properties:
+      title:
+        type: string
+    type: object
+  rest.TaskCreateResponse:
+    properties:
+      id:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /todo/v1/tasks:
+    get:
+      description: Get a list of all tasks
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Task'
+            type: array
+        "404":
+          description: Task Not Found
+      summary: Get all tasks
+    post:
+      consumes:
+      - application/json
+      description: Create a new task
+      parameters:
+      - description: Task creation request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/rest.TaskCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/rest.TaskCreateResponse'
+      summary: Create a new task
+  /todo/v1/tasks/{id}:
+    delete:
+      description: Delete a task by ID
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Task Not Found
+      summary: Delete a task
+    get:
+      description: Get details of a task by ID
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Task'
+        "404":
+          description: Task Not Found
+      summary: Get details of a task
+    put:
+      consumes:
+      - application/json
+      description: Update details of a task by ID
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Task update request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Task'
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Task Not Found
+      summary: Update details of a task
+  /todo/v1/tasks/{id}/done:
+    post:
+      description: Mark a task as done by ID
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Task Not Found
+      summary: Mark task as done
+swagger: "2.0"
