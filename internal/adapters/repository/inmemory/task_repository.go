@@ -22,6 +22,7 @@ func NewTaskRepository() *TaskRepository {
 	}
 }
 
+// Create handles the creation of a new task.
 func (r *TaskRepository) Create(ctx context.Context, taskTitle string) (string, error) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -35,6 +36,7 @@ func (r *TaskRepository) Create(ctx context.Context, taskTitle string) (string, 
 	return task.ID, nil
 }
 
+// Update handles the updation of an existing task.
 func (r *TaskRepository) Update(ctx context.Context, task *domain.Task) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -43,6 +45,7 @@ func (r *TaskRepository) Update(ctx context.Context, task *domain.Task) error {
 	return nil
 }
 
+// Delete handles the deletion of an existing task.
 func (r *TaskRepository) Delete(ctx context.Context, id string) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
@@ -51,6 +54,7 @@ func (r *TaskRepository) Delete(ctx context.Context, id string) error {
 	return nil
 }
 
+// GetByID return task details by provided ID.
 func (r *TaskRepository) GetByID(ctx context.Context, id string) (*domain.Task, error) {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
@@ -62,6 +66,7 @@ func (r *TaskRepository) GetByID(ctx context.Context, id string) (*domain.Task, 
 	return task, nil
 }
 
+// GetByID return all the task details.
 func (r *TaskRepository) GetAll(ctx context.Context) ([]*domain.Task, error) {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
